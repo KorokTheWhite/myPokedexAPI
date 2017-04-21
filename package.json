@@ -1,0 +1,15 @@
+{
+  "name": "pokedex_api",
+  "version": "1.0.0",
+  "description": "a simple api with only basic information of the 800+ pokemon",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "KorokWhite",
+  "license": "ISC",
+  "dependencies": {
+    "mongod": "^2.0.0",
+    "mongoose": "^4.9.5"
+  }
+}
