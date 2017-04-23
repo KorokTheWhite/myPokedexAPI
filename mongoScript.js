@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/pokedexApi');
+mongoose.connect('mongodb://localhost/27017');
 
-var moveSchema = new mongoose.schema({
+const moveSchema = new mongoose.Schema({
     number: Number,
     power: Number,
     pp: Number,
@@ -14,7 +14,7 @@ var moveSchema = new mongoose.schema({
     }]
 });
 
-var pokemonSchema = new mongoose.schema({
+const pokemonSchema = new mongoose.Schema({
     nDexNumber: Number,
     name: String,
     type1: String,
@@ -22,7 +22,8 @@ var pokemonSchema = new mongoose.schema({
     ability: [String],
     hiddenAbility: String,
     evolutionLine: [{
-        nDexNumber: Number, 
+        nDexNumber: Number,
+        isThisPokemon: Boolean,
         evolveHow: String
     }],
     genderRatio: [Number],
@@ -41,9 +42,9 @@ var pokemonSchema = new mongoose.schema({
     }]
 });
 
-var Pokemon = mongoose.model('Pokemon', pokemonSchema);
+let Pokemon = mongoose.model('Pokemon', pokemonSchema);
 
-var bulbasaur = new Pokemon;
+let bulbasaur = new Pokemon;
 
 bulbasaur.nDexNumber = 001;
 bulbasaur.name = 'Bulbasaur';
@@ -51,7 +52,21 @@ bulbasaur.type1 = 'Grass';
 bulbasaur.type2 = 'Poison';
 bulbasaur.ability = ['Overgrow'];
 bulbasaur.hiddenAbility = 'Chlorophyll';
-bulbasaur.evolutionLine =  [{001, 'Bulbasaur'}, {002, 'Ivysaur'}, {003, 'Venusaur'}];
+bulbasaur.evolutionLine = [{
+        nDexNumber: 001,
+        isThisPokemon: true,
+        evolveHow: null
+    },
+    {
+        nDexNumber: 002,
+        isThisPokemon: false,
+        evolveHow: 'Level 16'
+    },
+    {
+        nDexNumber: 003,
+        isThisPokemon: false,
+        evolveHow: 'Level 32'
+    }];
 bulbasaur.genderRatio = [87.5, 12.5];
 bulbasaur.mega = false;
 bulbasaur.stats = [45, 49, 49, 65, 65, 45];
@@ -60,3 +75,8 @@ bulbasaur.megaStats = null;
 bulbasaur.megaTotalStats = null;
 bulbasaur.learnset = null;
 bulbasaur.gameLocations = null;
+
+bulbasaur.save((err) => {
+    if (err) console.log(err);
+    else console.log(bulbasaur);
+});
