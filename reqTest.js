@@ -12,14 +12,21 @@ let options = {
     }
 };
 
-let result;
+let result = "";
 
 http.get(options, (response) => {
     response.setEncoding('utf8');
+
     response.on('data', (chunk) => {
-        result = JSON.parse(chunk);
+        result += chunk;
+    });
+    
+    response.on('end' , () => {
+        console.log(result);
+        result = JSON.parse(result);
         console.log(result);
     });
+
 }).on("error", (e) => {
     console.log("Got error: " + e.message);
 });
