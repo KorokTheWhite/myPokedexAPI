@@ -28,7 +28,6 @@ getData = (options, exec) => {
             result = JSON.parse(result);
             exec(result);
         });
-
     }).on('error', (e) => {
         console.log('Got error: ' + e.message);
     });
